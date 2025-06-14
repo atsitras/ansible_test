@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+    ## Debian & CentOS  and its derivatives
+    - name: Update cache and install apache2 & php packages
+      package:
+        name:
+          - "{{ apache_package }}"
+          - "{{ php_package }}"
+        state: latest
+        update_cache : yes
+
+
