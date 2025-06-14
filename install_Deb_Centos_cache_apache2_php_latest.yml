@@ -1,0 +1,48 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Update Debian repository index
+    apt:
+      update_cache: yes
+    when: ansible_distribution == "Debian"
+      # when: ansible_distribution in ["Ubuntu", "Debian", "Kali", "Raspbian"]
+
+  - name: Install Debian apache2 package
+    apt:
+      name: apache2
+      state: latest
+    when: ansible_distribution == "Debian"
+    # when: ansible_distribution in ["Ubuntu", "Debian", "Kali", "Raspbian"]
+
+  - name: Install Debian php support for Apache2
+    apt:
+      name: libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Debian"
+        #when: ansible_distribution in ["Ubuntu", "Debian", "Kali", "Raspbian"]    
+        #
+        #
+### Centos
+- name: Update CentOS repository index 
+    dnf:
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+      # when: ansible_distribution in ["Ubuntu", "Debian", "Kali", "Raspbian"]
+
+  - name: Install CentOS apache2 package
+    dnf:
+      name: httpd
+      state: latest
+    when: ansible_distribution == "CentOS"
+    # when: ansible_distribution in ["Ubuntu", "Debian", "Kali", "Raspbian"]
+
+  - name: Install CentOS php support for Apache2
+    dnf:
+      name: php
+      state: latest
+    when: ansible_distribution == "CentOS"
+        #when: ansible_distribution in ["Ubuntu", "Debian", "Kali", "Raspbian"]
+
