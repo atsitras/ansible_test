@@ -1,0 +1,56 @@
+```ansible all --key-file ~/.ssh/ansible -i inventory -m ping```
+######################################################################
+# Pings all the hosts in the inventory
+```ansible all -m ping```
+######################################################################
+# Lists all hosts
+```ansible all --list-hosts```
+######################################################################
+# Gather facts and details of the inventory IPs
+ansible all -m gather_facts
+######################################################################
+# gather facts and info only for a certain IP
+ansible all -m gather_facts --limit the_system_IP
+######################################################################
+# Gather OS info of an IP
+ansible all -m gather_facts --limit the_system_IP | grep ansible_distribution
+######################################################################
+# Executes apt-get update with sudo. All servers need to have the same
+# sudo passwd!!!
+ansible all -m apt -a update_cache=true --become --ask-become-pass
+######################################################################
+# Install in all servers a package. VIM-NOX
+ansible all -m apt -a "name=vim-nox state=latest" --become --ask-become-pass
+
+ansible all -m apt -a name=vim-nox --become --ask-become-pass
+######################################################################
+# Execute dist-upgrade
+ansible all -m apt -a "upgrade=dist" --become --ask-become-pass
+######################################################################
+# Execute a playbook, eg install_apache.yml
+ansible-playbook --ask-become-pass install_apache.yml
+######################################################################
+
+
+######################################################################
+
+######################################################################
+
+
+######################################################################
+
+
+######################################################################
+
+######################################################################
+
+
+######################################################################
+
+
+######################################################################
+
+######################################################################
+
+
+
