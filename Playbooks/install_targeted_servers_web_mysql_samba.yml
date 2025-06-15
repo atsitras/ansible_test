@@ -1,0 +1,54 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+    - name: install updates (CentOS)
+      dnf:
+        update_only: yes
+        update_cache: yes
+      when: ansible_distribution == "CentOS"
+
+    - name: install updates (Debian)
+      apt:
+        upgrade: dist
+        update_cache: yes
+      when: ansible_distribution == "Debian"
+
+- hosts: web_servers
+  become: true
+  tasks:
+  # # ### Debian
+    - name: Install Debian apache2 and php packages
+      apt:
+        name: 
+          - apache2
+          - libapache2-mod-php
+        state: latest
+      when: ansible_distribution == "Debian"
+
+# # ### Centos
+    - name: Install CentOS apache2 and php packages
+      dnf:
+        name: 
+          - httpd
+          - php
+        state: latest
+      when: ansible_distribution == "CentOS"
+
+- hosts: db_servers
+  become: true
+  tasks:
+  # # ### Debian
+    - name: Install Debian MariaDB package
+      apt:
+        name: mariadb-server
+        state: latest
+      when: ansible_distribution == "Debian"
+
+    # # ### Centos
+    - name: Install CentOS MariaDB package
+      dnf:
+        name: mariadb
+        state: latest
+      when: ansible_distribution == "CentOS"
